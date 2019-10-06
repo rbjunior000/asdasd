@@ -72,12 +72,11 @@ export default class Gameplay extends Component {
         this.setState({randomURL: skill.url})
     }
 
-    handleInputChange = e => {
+     handleInputChange = async e => {
         e.preventDefault();
-        this.setState({ type: e.target.value})
-        // console.log(this.state.type.length)
+        await this.setState({ type: e.target.value})
 
-        if (this.state.type.length <3) {
+        if (this.state.type.length === 3) {
             this.handleSubmit();
         }
     }
@@ -94,7 +93,7 @@ export default class Gameplay extends Component {
         const response = skills.find(function(item) {
             return item.key === type
         })
-        if (response) {
+        if (response && response.url === this.state.randomURL) {
             this.setState({type: ''})
             this.handleRandom();
           }
@@ -108,7 +107,7 @@ export default class Gameplay extends Component {
       return (
           <Container>
               <img src={randomURL} alt="skill"/>
-              <form onSubmit={this.handleSubmit()}>
+              <form onSubmit={this.handleSubmit}>
                 <input
                     value={type}
                     onChange={this.handleInputChange}
